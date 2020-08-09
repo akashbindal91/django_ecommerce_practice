@@ -15,6 +15,7 @@ class Category(models.Model):
     def __str__(self):
         return '{}'.format(self.name)
 
+    """ get the reverse url to redirect to function """
     def get_url(self):
         return reverse('shop:products_by_category', args=[self.slug], )
 
