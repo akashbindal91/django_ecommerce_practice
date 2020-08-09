@@ -1,0 +1,7 @@
+Django==2.2
+django-mysql==3.8.1
+mysqlclient==2.0.1
+Pillow==7.2.0
+pkg-resources==0.0.0
+pytz==2020.1
+sqlparse==0.3.1
