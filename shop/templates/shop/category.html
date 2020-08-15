@@ -68,14 +68,38 @@
             {% endfor %}
         </div>
         <div class="mx-auto">
-            {% if products.paginator.num_pages > 1 %}
+            <!-- This is step 1 used with pagination start -->
+            <!--{% if products.paginator.num_pages > 1 %}
                 <hr>
                 <div class="text-center">
                     {% for pg in products.paginator.page_range %}
                         <a href="?page={{ pg }}" class="btn btn-light btn-sm {% if products.number == pg %} active {% endif %}">{{ pg }}</a>
                     {% endfor %}
                 </div>
-            {% endif %}
+            {% endif %} -->
+            <!-- This is step 1 used with pagination end -->
+
+
+            <!-- This is step 2 used with pagination start -->
+            <div class="pagination">
+                <span class="step-links">
+                    {% if products.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ products.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ products.number }} of {{ products.paginator.num_pages }}.
+                    </span>
+
+                    {% if products.has_next %}
+                        <a href="?page={{ products.next_page_number }}">next</a>
+                        <a href="?page={{ products.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+            <!-- This is step 2 used with pagination end -->
+        
         </div>
     </div>
 {% endblock content %}
