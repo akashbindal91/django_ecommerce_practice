@@ -2,7 +2,6 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
-
 .nav-item {
   letter-spacing: 0.2em;
   font-size: 14px;
@@ -17,11 +16,49 @@ body {
 
 /* footer class */
 .my_footer {
-    background-color: #f8f9fa;
-    height: 14px;
+  background-color: #f8f9fa;
+  height: 14px;
 }
 
 .my_footer p {
-    padding-top: 20px;
-    font-size: 14px;
+  padding-top: 20px;
+  font-size: 14px;
+}
+/* category page class */
+.my_row_class {
+  padding-top: 15px;
+}
+.my_row_class .mx-auto p {
+  color: #000;
+  font-size: 12px;
+}
+.my_row_class .mx-auto p a {
+  color: #000;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.my_image {
+  width: 100%;
+  height: auto;
+}
+
+.my_title {
+  font-size: 16px;
+  /* text-transform change letter to uppercase */
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+.my_image_padding {
+  padding-top: 10px;
+}
+
+.my_bottom_margin {
+  padding-bottom: 10px;
+}
+
+.card-body h4 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: .2em;
 }
