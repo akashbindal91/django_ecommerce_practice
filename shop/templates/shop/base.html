@@ -2,11 +2,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Required meta tags -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" content="{% block metadescription %}{% endblock metadescription %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="{% block metadescription %}{% endblock metadescription %}">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href=" {% static 'css/custom.css' %} ">
+    <link rel="stylesheet" href=" {% static 'css/bootstrap.min.css' %} ">
+    
+    <!-- Page title -->
     <title>{% block title %}{% endblock title %}</title>
 </head>
-<body>
+<body class="container">
     <div>
         {% include 'header.html' %}
         {% include 'navbar.html' %}
@@ -15,5 +23,11 @@
     </div>
     
     {% include 'footer.html' %}
+
+     <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'js/jquery-3.5.1.slim.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}" ></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
 </html>
