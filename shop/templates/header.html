@@ -1,6 +1,8 @@
 {% load staticfiles %}
 <header>
     <center>
-        <img src="{% static 'img/logo.png' %}" alt="Perfect cusion store">
+        <a href="{% url 'shop:allProdCat' %}">
+            <img src="{% static 'img/logo.png' %}" alt="Perfect cusion store">
+        </a>
     </center>
 </header>

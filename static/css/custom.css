@@ -1,0 +1,27 @@
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+
+.nav-item {
+  letter-spacing: 0.2em;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.dropdown-item {
+  letter-spacing: 0.2em;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+/* footer class */
+.my_footer {
+    background-color: #f8f9fa;
+    height: 14px;
+}
+
+.my_footer p {
+    padding-top: 20px;
+    font-size: 14px;
+}
