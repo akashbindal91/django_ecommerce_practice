@@ -1,11 +1,13 @@
 from django.db import models
 from django.urls import reverse
 # Create your models here.
+
+
 class Category(models.Model):
-    name = models.CharField(max_length=250, unique=True )
-    slug = models.SlugField(max_length=250, unique=True )
+    name = models.CharField(max_length=250, unique=True)
+    slug = models.SlugField(max_length=250, unique=True)
     description = models.TextField(blank=True)
-    image = models.ImageField( upload_to='category', blank=True )
+    image = models.ImageField(upload_to='category', blank=True)
 
     class Meta():
         ordering = ('name',)
@@ -16,15 +18,17 @@ class Category(models.Model):
         return '{}'.format(self.name)
 
     """ get the reverse url to redirect to function """
+
     def get_url(self):
         return reverse('shop:products_by_category', args=[self.slug], )
 
+
 class Product(models.Model):
-    name = models.CharField(max_length=250, unique=True )
-    slug = models.SlugField(max_length=250, unique=True )
+    name = models.CharField(max_length=250, unique=True)
+    slug = models.SlugField(max_length=250, unique=True)
     description = models.TextField(blank=True)
-    category = models.ForeignKey(Category , on_delete=models.CASCADE)
-    image = models.ImageField( upload_to='product', blank=True )
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='product', blank=True)
     price = models.DecimalField(decimal_places=2, max_digits=10)
     stock = models.IntegerField()
     available = models.BooleanField(default=True)
@@ -38,3 +42,6 @@ class Product(models.Model):
 
     def __str__(self):
         return '{}'.format(self.name)
+
+    def get_url(self):
+        return reverse('shop:ProdCatDetail', args=[self.category.slug, self.slug])
