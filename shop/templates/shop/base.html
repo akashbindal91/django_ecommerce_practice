@@ -1,39 +1,42 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="{% block metadescription %}{% endblock metadescription %}">
-    
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href=" {% static 'css/custom.css' %} ">
     <link rel="stylesheet" href=" {% static 'css/bootstrap.min.css' %} ">
-    
+
     <!-- Font Awesome  -->
     <link rel="stylesheet" href=" {% static 'css/fontawesome-all.min.css' %} ">
-    
+
     <!-- Page title -->
     <title>{% block title %}{% endblock title %}</title>
 </head>
+
 <body class="container">
     <div>
         {% include 'header.html' %}
         {% include 'navbar.html' %}
-        
+
         {% block content %}{% endblock content %}
     </div>
-    
+
     {% include 'footer.html' %}
 
-     <!-- Optional JavaScript -->
+    <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="{% static 'js/jquery-3.5.1.slim.min.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}" ></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
+
 </html>

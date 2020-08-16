@@ -21,21 +21,21 @@ def allProdCat(request, c_slug=None):
         product_list = Product.objects.all().filter(available=True)
 
     """ Pagination Integrated """
-    paginator = Paginator(product_list, 1) # Show 25 products per page
+    paginator = Paginator(product_list, 1)  # Show 25 products per page
 
     """ Both The Steps Can  be used for pagination"""
     """ this is step 1 """
     """ start """
     try:
         # get has second parameter here. ?
-        page = int(request.GET.get('page', '1')) 
+        page = int(request.GET.get('page', '1'))
     except:
         page = 1
 
     try:
         products = paginator.page(page)
-    except ( EmptyPage, InvalidPage ):
-        products = paginator.page( paginator.num_pages )
+    except (EmptyPage, InvalidPage):
+        products = paginator.page(paginator.num_pages)
     """ end """
 
     """ this is step 2 """
@@ -44,7 +44,6 @@ def allProdCat(request, c_slug=None):
     # products = paginator.get_page(page)
     """ end """
 
-
     return render(request, 'shop/category.html', {'products': products, 'category': c_page})
 
 
@@ -52,7 +51,8 @@ def ProdCatDetail(request, c_slug, product_slug):
     try:
         product = Product.objects.get(category__slug=c_slug, slug=product_slug)
         # print(product.query)
-        print(Product.objects.filter(category__slug=c_slug, slug=product_slug).query)
+        print(Product.objects.filter(
+            category__slug=c_slug, slug=product_slug).query)
 
         """ This above Query will perform as """
         # SELECT * FROM `shop_product` INNER JOIN `shop_category` ON (`shop_product`.`category_id` = `shop_category`.`id`) WHERE (`shop_category`.`slug` = category-4 AND `shop_product`.`slug` = product-4) ORDER BY `shop_product`.`name` ASC

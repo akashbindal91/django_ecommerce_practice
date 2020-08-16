@@ -60,7 +60,7 @@ body {
 .card-body h4 {
   font-size: 14px;
   text-transform: uppercase;
-  letter-spacing: .2em;
+  letter-spacing: 0.2em;
 }
 
 /* product page  */
@@ -73,7 +73,7 @@ body {
   color: #000;
   font-size: 12px;
 }
-.my_prod_row_class .mx-auto p a{
+.my_prod_row_class .mx-auto p a {
   color: #000;
   font-size: 12px;
   text-decoration: none;
@@ -82,11 +82,15 @@ body {
 .my_prod_title {
   font-size: 16px;
   text-transform: uppercase;
-  letter-spacing: .2em;
+  letter-spacing: 0.2em;
   padding-top: 15px;
   padding-bottom: 10px;
 }
 
 .my_prod_text {
   padding-right: 20px;
+}
+
+.my_search_text {
+  padding-top: 20px;
 }
