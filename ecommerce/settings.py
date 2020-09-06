@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shop',
-    'search_app'
+    'search_app',
+    'cart'
 ]
 
 MIDDLEWARE = [
@@ -59,6 +60,7 @@ TEMPLATES = [
         'DIRS': [
             os.path.join(BASE_DIR, 'shop', 'templates/'),
             os.path.join(BASE_DIR, 'search_app', 'templates/'),
+            os.path.join(BASE_DIR, 'cart', 'templates/'),
 
         ],
         'APP_DIRS': True,
