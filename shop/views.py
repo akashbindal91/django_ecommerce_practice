@@ -21,7 +21,7 @@ def allProdCat(request, c_slug=None):
         product_list = Product.objects.all().filter(available=True)
 
     """ Pagination Integrated """
-    paginator = Paginator(product_list, 1)  # Show 25 products per page
+    paginator = Paginator(product_list, 10)  # Show 25 products per page
 
     """ Both The Steps Can  be used for pagination"""
     """ this is step 1 """
