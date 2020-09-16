@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'shop',
     'search_app',
-    'cart'
+    'cart',
+    'stripe'
 ]
 
 MIDDLEWARE = [
@@ -153,3 +154,4 @@ STATICFILES_DIRS = [
 ]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
+
