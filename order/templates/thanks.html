@@ -1,0 +1,24 @@
+{% extends 'shop/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    Thanks
+{% endblock title %}
+    
+
+{% block content %}
+    <div>
+        <div class="text_center">
+            <br>
+            <br>
+            <h1 class="text_center my_title">
+                Thanks for placing your order.
+            </h1>
+            <br>
+            <br>
+            <p>Your order number is : {{ customer_order.id }}</p>
+            <br>
+        </div>
+    </div>
+{% endblock content %}
+    

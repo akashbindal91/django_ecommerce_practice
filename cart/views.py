@@ -147,7 +147,8 @@ def cart_detail(request, total=0, counter=0, cartItems=None):
 
                     """ Terminal will print when order is placed """
                 print('Order has been successfully placed.')
-                return redirect('shop:allProdCat')
+                # return redirect('shop:allProdCat')
+                return redirect('order:thanks',  order_details.id )
             
             except ObjectDoesNotExist:
                 pass
