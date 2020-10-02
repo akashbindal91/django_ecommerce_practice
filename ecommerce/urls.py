@@ -26,7 +26,11 @@ urlpatterns = [
     path('shop/', include('shop.urls')),
     path('cart/', include('cart.urls')),
     path('search/', include('search_app.urls')),
-    path('order/', include('order.urls'))
+    path('order/', include('order.urls')),
+    path('account/create/', shop_view.signupView, name='signup'),
+    path('account/login/', shop_view.signinView, name='signin'),
+    path('account/logout/', shop_view.signoutView, name='logout'),
+
 ]
 
 if settings.DEBUG:

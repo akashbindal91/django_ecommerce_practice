@@ -1,7 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
 from shop.models import Product, Category
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
+from shop.forms import SignUpForm
+from django.contrib.auth.models import Group, User
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
 
@@ -64,3 +68,52 @@ def ProdCatDetail(request, c_slug, product_slug):
         raise e
 
     return render(request, 'shop/product.html', {'product': product})
+
+
+def signupView(request):
+    """
+    docstring
+    """
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            signup_user = User.objects.get(username=username)
+            customer_group = Group.objects.get(name='Customer')
+            customer_group.user_set.add(signup_user)
+        else:
+            pass
+    else:
+        form = SignUpForm()
+    return render(request, 'accounts/signup.html', {'form': form})
+
+
+def signinView(request):
+    """
+    docstring
+    """
+
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                return redirect('shop:allProdCat')
+            else:
+                return redirect('signup')
+        else:
+            pass
+    else:
+        form = AuthenticationForm()
+    return render(request, 'accounts/signin.html', {'form': form})
+
+
+def signoutView(request):
+    logout(request)
+    return redirect('signin')

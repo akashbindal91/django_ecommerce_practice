@@ -124,7 +124,6 @@ body {
 .my_custom_button {
   margin-top: 5px;
 }
- 
 
 /* stripe css */
 .stripe-button-el {
@@ -140,9 +139,42 @@ body {
   padding: 0px 12px;
   height: 36px !important;
   line-height: 36px !important;
-  font-family: 'Roboto' , sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
   font-size: 12px !important;
   color: #fff !important;
   background-image: none !important;
   background: none !important;
+}
+
+.errorlist li {
+  color: red;
+  font-weight: bold;
+}
+
+.my_top_navbar_div {
+  height: 60px;
+  line-height: 50px;
+}
+
+.my_custom_class {
+  text-align: right !important;
+}
+
+.my_custom_class ul li {
+  list-style: none;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 12px;
+  padding-right: 20px;
+  display: inline;
+}
+
+.my_custom_class ul li a {
+  text-decoration: none;
+  list-style: none;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 12px;
 }
