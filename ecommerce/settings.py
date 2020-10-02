@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from dotenv import load_dotenv
+# OR, the same with increased verbosity
+load_dotenv(verbose=True)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'fgeg_ro0_sta!r_a_rh^@iqxq5m-2qtd5=s=w+q*v!i=0-*g=b'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -89,20 +92,12 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     # },
-    # 'default': { 
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'ecommerce', 
-    #     'USER': 'postgres', 
-    #     'PASSWORD': 'empire123', 
-    #     'HOST': 'localhost', # the missing piece of the puzzle 
-    #     'PORT': '5432', # optional, I don't need this since I'm using the standard port
-    # }
     'default': { 
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ecommerce', 
-        'USER': 'root', 
-        'PASSWORD': 'empire', 
-        'HOST': 'localhost', # the missing piece of the puzzle 
+        'ENGINE': os.getenv('DB_ENGINE'),
+        'NAME': os.getenv('DB_NAME'), 
+        'USER': os.getenv('DB_USER'), 
+        'PASSWORD': os.getenv('DB_PASSWORD'), 
+        'HOST': os.getenv('DB_HOST'), # the missing piece of the puzzle 
         # 'PORT': '5432', # optional, I don't need this since I'm using the standard port
     }
 }
@@ -156,3 +151,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
 
 
+STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY')
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
