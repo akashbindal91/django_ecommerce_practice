@@ -4,6 +4,7 @@ from cart.models import Cart, CartItem
 from shop.models import Product
 import stripe
 from django.conf import settings
+from order.models import Order, OrderItem
 # Create your views here.
 
 """ Create Cart details from the session of the request """
@@ -93,11 +94,66 @@ def cart_detail(request, total=0, counter=0, cartItems=None):
         try:
             token = request.POST['stripeToken']
             email = request.POST['stripeEmail']
+            billingName = request.POST['stripeBillingName']
+            billingAddress1 = request.POST['stripeBillingAddressLine1']
+            billingCity = request.POST['stripeBillingAddressCity']
+            billingPostCode = request.POST['stripeBillingAddressZip']
+            billingCountry = request.POST['stripeBillingAddressCountry']
+            shippingName = request.POST['stripeShippingName']
+            shippingAddress1 = request.POST['stripeShippingAddressLine1']
+            shippingCity = request.POST['stripeShippingAddressCity']
+            shippingPostCode = request.POST['stripeShippingAddressZip']
+            shippingCountry = request.POST['stripeShippingAddressCountry']
             customer = stripe.Customer.create(email=email, source=token)
             charge = stripe.Charge.create(amount=stripe_total, currency='inr', description=description,
                                           customer=customer.id)
+            ''' create order here '''
+            try:
+                order_details = Order.objects.create(
+                    token=token,
+                    total=total,
+                    emailAddress=email,
+                    billingAddress1=billingAddress1,
+                    billingCity=billingCity,
+                    billingPostCode=billingPostCode,
+                    billingCountry=billingCountry,
+                    billingName=billingName,
+                    shippingName=shippingName,
+                    shippingAddress1=shippingAddress1,
+                    shippingCity=shippingCity,
+                    shippingPostCode=shippingPostCode,
+                    shippingCountry=shippingCountry
+                )
+
+                order_details.save()
+                for order_item in cart_items:
+                    oi = OrderItem.objects.create(
+                        product=order_item.product.name,
+                        quantity=order_item.quantity,
+                        price=order_item.product.price,
+                        order=order_details
+                    )
+
+                    oi.save()
+
+                    """ reduce order stock when item placed and remove orer from shopping cart"""
+                    product = Product.objects.get(id=order_item.product.id)
+                    product.stock = int(
+                        order_item.product.stock - order_item.quantity)
+                    product.save()
+
+                    """ delete items from order cart """
+                    order_item.delete()
+
+                    """ Terminal will print when order is placed """
+                print('Order has been successfully placed.')
+                return redirect('shop:allProdCat')
+            
+            except ObjectDoesNotExist:
+                pass
+
         except stripe.error.CardError as e:
-            return False,e
+            return False, e
         # print(request.POST)
         # <QueryDict: {'csrfmiddlewaretoken': ['j3k5pviaMgQGB32O7QLZmuik8yq4juMY4zTVejR8cuanPjmQXdy4pKHBwM3s7DNx'], 'stripeToken': ['tok_1HS5KPEcB39RSPvROkNWv5oj'], 'stripeTokenType': ['card'], 'stripeEmail': ['akashbindal91@gmail.com'], 'stripeBillingName': ['Akash'], 'stripeBillingAddressCountry': ['India'], 'stripeBillingAddressCountryCode': ['IN'], 'stripeBillingAddressZip': ['458470'], 'stripeBillingAddressLine1': ['D 1/2, vikram cement staff colony, nimach, madhya pradesh'], 'stripeBillingAddressCity': ['nimach'], 'stripeBillingAddressState': ['35'], 'stripeShippingName': ['Akash'], 'stripeShippingAddressCountry': ['India'], 'stripeShippingAddressCountryCode': ['IN'], 'stripeShippingAddressZip': ['458470'], 'stripeShippingAddressLine1': ['D 1/2, vikram cement staff colony, nimach, madhya pradesh'], 'stripeShippingAddressCity': ['nimach'], 'stripeShippingAddressState': ['35']}>
     return render(request, 'cart/cart.html', dict(cart_items=cart_items, total=total, counter=counter, data_key=data_key, description=description, stripe_total=stripe_total))
