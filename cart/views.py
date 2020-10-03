@@ -5,8 +5,9 @@ from shop.models import Product
 import stripe
 from django.conf import settings
 from order.models import Order, OrderItem
-from django.template.loader import get_template
+from django.template.loader import get_template, render_to_string
 from django.core.mail import EmailMessage
+from ecommerce.common.mail.sendMail import send_email
 # Create your views here.
 
 """ Create Cart details from the session of the request """
@@ -155,7 +156,6 @@ def cart_detail(request, total=0, counter=0, cartItems=None):
                     """ send Email fnction """
                     print('-----------call sendEmail------------')
                     sendEmail(order_details.id)
-                    print('order email sent')
                 except IOError as e:
                     return e
                 # return redirect('shop:allProdCat')
@@ -191,22 +191,20 @@ def full_remove(request, product_id):
     return redirect('cart:cart_detail')
 
 def sendEmail(order_id):
-    print('-----------sendEmail------------')
+
     tranaction = Order.objects.get(id=order_id)
     order_items = OrderItem.objects.filter(order=tranaction)
+    """ sending order to the customer """
+    subject = "New Order No #{}".format(tranaction.id)
+    to = ['{}'.format(tranaction.emailAddress)]
+    from_email = settings.EMAIL_FROM
 
+    order_conformation = { 'tranaction' : tranaction, 'order_items' : order_items }
+    message = get_template('email/email.html').render(order_conformation)
+    html_message = None
     try:
-        """ sending order to the customer """
-        subject = "New Order No #{}".format(tranaction.id)
-        to = ['{}'.format(tranaction.emailAddress)]
-        from_email = settings.EMAIL_FROM
+        sendMailStatus = send_email( subject=subject, to=to, from_email=from_email, message=message, html_message=html_message)
+    except sendMailStatus:
+        return False
 
-        order_conformation = { 'tranaction' : tranaction, 'order_items' : order_items }
-        message = get_template('email/email.html').render(order_conformation)
-        # msg = send_email({'to' : to, 'subject' : subject, 'from_email' : from_email, 'message' : message})
-        
-        msg = EmailMessage(subject, message, to=to, from_email=from_email)
-        msg.content_subtype = 'html'
-        msg.send()
-    except IOError as e:
-        return e
+    return True

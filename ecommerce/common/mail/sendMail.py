@@ -1,4 +1,4 @@
-from django.core.mail import BadHeaderError, send_mail
+from django.core.mail import BadHeaderError, EmailMessage, send_mail
 # from django.http import HttpResponse, HttpResponseRedirect
 
 
@@ -17,21 +17,32 @@ from django.core.mail import BadHeaderError, send_mail
 #         # to get proper validation errors.
 #         return HttpResponse('Make sure all fields are entered and valid.')
 
-def send_email(request, **kwargs):
-    subject = kwargs.subject
-    message = kwargs.message
-    from_email = kwargs.from_email
-    to = kwargs.to
+def send_email(**kwargs):
 
-    if subject and message and from_email and to:
+    subject = kwargs.get('subject')
+    message = kwargs.get('message')
+    from_email = kwargs.get('from_email')
+    to = kwargs.get('to')
+    html_message = kwargs.get('html_message')
+
+    if subject and message and from_email and to and html_message:
+        print('----------------if---------------------')
         try:
-            send_mail(subject, message, from_email, to)
+            send_mail(subject, message, from_email, to, html_message)
         except BadHeaderError as e:
             return e
             # return HttpResponse('Invalid header found.')
-        # return HttpResponseRedirect('/contact/thanks/')
+    elif subject and message and from_email and to:
+        try:
+            print('----------------elif---------------------')
+            msg = EmailMessage(subject, message, to=to, from_email=from_email)
+            msg.content_subtype = 'html'
+            msg.send()
+        except IOError as e:
+            return e
     else:
+        print('----------------else---------------------')
         # In reality we'd use a form class
         # to get proper validation errors.
         return False
-        # return HttpResponse('Make sure all fields are entered and valid.')
+    return True
