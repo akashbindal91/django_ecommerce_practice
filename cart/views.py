@@ -204,7 +204,7 @@ def sendEmail(order_id):
     html_message = None
     try:
         sendMailStatus = send_email( subject=subject, to=to, from_email=from_email, message=message, html_message=html_message)
-    except sendMailStatus:
+    except sendMailStatus.DoesNotExist:
         return False
 
     return True
