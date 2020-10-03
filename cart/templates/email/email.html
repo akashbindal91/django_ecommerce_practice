@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#{{ tranaction.id }}</title>
+</head>
+
+<body>
+    <center>Thank you for the purchase</center>
+    <table>
+        <tr>
+            <td colspan="2">
+                <b>Bill to: </b>
+                <br>
+                {{ tranaction.billingName }}<br>
+                {{ tranaction.billingAddress }}<br>
+                {{ tranaction.billingCity }}<br>
+                {{ tranaction.billingPostcode }}<br>
+                {{ tranaction.billingCountry }}<br>
+            </td>
+            <td colspan="2">
+                <b>Order :</b> #{{ tranaction.id }}
+                <b>Date :</b> #{{ tranaction.created | date:"d M Y" }}
+            </td>
+        </tr>
+        <tr>
+            <td><b>Product Description</b></td>
+            <td><b>Quantity</b></td>
+            <td><b>Unit Price</b></td>
+            <td><b>Sub Total</b></td>
+        </tr>
+
+        {% for item in order_items %}
+        <tr>
+            <td><b>{{item.product}}</b></td>
+            <td><b>{{item.quantity}}</b></td>
+            <td><b>{{item.price}}</b></td>
+            <td><b>{{item.sub_total}}</b></td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td><b>Total</b></td>
+            <td>{{tranaction.total}}</td>
+        </tr>
+        <tr>
+            <td><b>Total Paid</b></td>
+            <td>{{tranaction.total}}</td>
+        </tr>
+    </table>
+
+    <center>
+        <br>
+        <p>
+            If you are a regitered user and want to check your order history, click <a href=""> here </a>
+        </p>
+    </center>
+</body>
+
+</html>
